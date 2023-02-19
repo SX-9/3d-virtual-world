@@ -54,7 +54,7 @@ scene.background = bg;
 function animate() {
   requestAnimationFrame(animate);
 
-  object.rotation.y += 0.01;
+  object.rotation.y += 0.001;
   controls.update();
 
   renderer.render(scene, camera);
