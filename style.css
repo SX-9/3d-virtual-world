@@ -3,6 +3,7 @@
   font-family: monospace;
 }
 h1, h2, p, summary { margin: 2rem; }
+a { text-decoration: underline; }
 canvas#bg, div {
   position: fixed;
   top: 0;

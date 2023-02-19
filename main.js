@@ -14,7 +14,7 @@ camera.position.setZ(30);
 
 renderer.render(scene, camera);
 
-const geometry = new THREE.SphereGeometry(10, 10, 10);
+const geometry = new THREE.SphereGeometry(10, 20, 10);
 const texture = new THREE.TextureLoader().load('earth.png');
 const material = new THREE.MeshStandardMaterial({
   // color: 0x0000ff,
@@ -24,6 +24,19 @@ const material = new THREE.MeshStandardMaterial({
 const object = new THREE.Mesh(geometry, material);
 
 scene.add(object);
+
+const geometry2 = new THREE.TorusGeometry(15, 1.5, 4, 200);
+const texture2 = new THREE.TextureLoader().load('ring.png');
+const material2 = new THREE.MeshStandardMaterial({
+  // color: 0xe89714,
+  // wireframe: true,
+  map: texture2,
+});
+const ring = new THREE.Mesh(geometry2, material2);
+
+scene.add(ring);
+ring.position.set(0, 0, 0);
+ring.rotation.x = Math.PI / 2;
 
 const light = new THREE.PointLight(0xffffff);
 light.position.set(-25, 20, 30);
@@ -51,10 +64,11 @@ Array(250).fill().forEach(addStar);
 const bg = new THREE.TextureLoader().load('space.jpg');
 scene.background = bg;
 
+let speed = 0.001;
 function animate() {
   requestAnimationFrame(animate);
 
-  object.rotation.y += 0.001;
+  object.rotation.y += speed;
   controls.update();
 
   renderer.render(scene, camera);
@@ -62,9 +76,14 @@ function animate() {
 
 animate();
 
+document.querySelector('#star').onclick = addStar;
+document.querySelector('#speed').onclick = () => speed = Math.round(prompt('Enter Speed Number:', speed), 10);
+
 window.addEventListener('keydown', (event) => {
   if (event.code === 'KeyO') {
     addStar();
+  } else if (event.code === 'KeyF') {
+    speed = Math.round(prompt('Enter Speed Number:', speed), 10);
   } else if (event.code === 'KeyW') {
     camera.position.z -= 0.5;
   } else if (event.code === 'KeyS') {
