@@ -1,0 +1,13 @@
+* {
+  color: white;
+  font-family: monospace;
+}
+h1, h2, p, summary { margin: 2rem; }
+canvas#bg, div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  cursor: crosshair;
+}
+div { background: #000000a2; }
+body { background: black; }
