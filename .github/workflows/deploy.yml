@@ -9,9 +9,9 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    if: always() && (github.ref == 'refs/heads/master')
-
+    if: always()
     steps:
+
       - name: Checkout repo
         uses: actions/checkout@v2
 
@@ -31,6 +31,13 @@ jobs:
         with:
           name: production-files
           path: ./dist
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
 
       - name: Download artifact
         uses: actions/download-artifact@v2
