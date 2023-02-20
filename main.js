@@ -1,6 +1,6 @@
 import './style.css';
-import earth from './earth.png';
-import circle from './ring.png';
+import earth from './earth.jpg';
+import circle from './ring.jpg';
 
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -17,7 +17,7 @@ camera.position.setZ(30);
 
 renderer.render(scene, camera);
 
-const geometry = new THREE.SphereGeometry(10, 20, 10);
+const geometry = new THREE.SphereGeometry(10, 50, 10);
 const texture = new THREE.TextureLoader().load(earth);
 const material = new THREE.MeshStandardMaterial({
   // color: 0x0000ff,
@@ -54,17 +54,28 @@ scene.add(light, dark);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
-function addStar() {
-  const geometry = new THREE.SphereGeometry(0.25, 1, 1);
-  const material = new THREE.MeshStandardMaterial({ color: 0xffffff, });
+function addStar(asteroid) {
+  const geometry = new THREE.SphereGeometry(asteroid ? 1 : 0.25, 1, 1);
+  const material = new THREE.MeshStandardMaterial({ color: asteroid ? 0x505050 : 0xffffff, });
   const star = new THREE.Mesh(geometry, material);
 
   const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
   star.position.set(x, y, z);
   scene.add(star);
+  if (asteroid) {
+    setInterval(() => {
+      star.position.y -= Math.random();
+      star.position.z += Math.random();
+      star.position.x += Math.random();
+    }, 1);
+    setTimeout(() => {
+      scene.remove(star);
+    }, 5000);
+  }
 }
 
-Array(250).fill().forEach(addStar);
+Array(250).fill().forEach(() => addStar(false));
+// setInterval(() => Array(1).fill().forEach(() => addStar(true)), 1000);
 
 // const bg = new THREE.TextureLoader().load('space.jpg');
 // scene.background = bg;
@@ -74,7 +85,7 @@ function animate() {
   requestAnimationFrame(animate);
 
   object.rotation.y += speed;
-  ring.rotation.z += speed;
+  ring.rotation.z += speed * 5;
   controls.update();
 
   renderer.render(scene, camera);
@@ -86,7 +97,7 @@ document.querySelector('#star').onclick = addStar;
 
 window.addEventListener('keydown', (event) => {
   if (event.code === 'KeyO') {
-    addStar();
+    addStar(true);
   } else if (event.code === 'KeyW') {
     camera.position.z -= 0.5;
   } else if (event.code === 'KeyS') {
