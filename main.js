@@ -1,6 +1,7 @@
 import './style.css';
-import earth from './earth.jpg';
-import circle from './ring.jpg';
+import earth from './images/earth.jpg';
+import circle from './images/ring.jpg';
+import space from './images/space.jpg';
 
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -77,8 +78,8 @@ function addStar(asteroid) {
 Array(250).fill().forEach(() => addStar(false));
 // setInterval(() => Array(1).fill().forEach(() => addStar(true)), 1000);
 
-// const bg = new THREE.TextureLoader().load('space.jpg');
-// scene.background = bg;
+const bg = new THREE.TextureLoader().load(space);
+scene.background = bg;
 
 let speed = 0.005;
 function animate() {
