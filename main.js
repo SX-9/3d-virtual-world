@@ -1,4 +1,7 @@
 import './style.css';
+import './earth.png';
+import './ring.png';
+
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
